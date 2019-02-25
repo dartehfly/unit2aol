@@ -98,37 +98,49 @@ Question 5: MindReader
 =======================
 """
 
+
+# number generator function, needs 3 (or less) number history to operate.
 def numbergenerator(nums):
-    if nums == [1,2,1] or nums == [2,1,2]:
+    if nums == [1, 2, 1] or nums == [2, 1, 2]:  # assuming 121212 or 212121 pattern.
         return nums[1]
-    elif nums == [1,1,1] or nums == [2,2,2]:
+    elif nums == [1, 1, 1] or nums == [2, 2, 2]:  # assuming 111111 or 222222 pattern.
         return nums[0]
-    elif nums == [2,1,1] or nums == [1,1,2]:
+    elif nums == [2, 1, 1] or nums == [1, 1, 2]:  # assuming 221122 or 112211 pattern.
         return 2
-    elif nums == [2,2,1] or nums == [1,2,2]:
+    elif nums == [2, 2, 1] or nums == [1, 2, 2]:  # assuming same pattern as above, but switched.
         return 1
-    elif len(nums) == 2 and nums == [1,1]:
+    elif len(nums) == 2 and nums == [1, 1]:  # assuming only two numbers and they're both 1.
         return 1
     else:
-        return 2
+        return 2  # if all else fails, 2, also if the first two are twos this will catch on.
+
 
 def mindreader():
-    score = {"Computer":0, "Player":0}
-    numbers = []
-    while score["Computer"] < 30 and score["Player"] < 30:
-        number = int(input("Okay. I have my number. What's yours? (1 or 2)\n"))
+
+    score = {"Computer": 0, "Player": 0}  # reset score
+    numbers = []  # used list here because tuples are immutable and dictionaries wouldn't make sense.
+
+    while score["Computer"] < 30 and score["Player"] < 30:  # while nobody has won yet,
+        number = int(input("Okay. I have my number. What's yours? (1 or 2)\n"))  # get user number
+
+        # compare user number and computer guess
         if number == numbergenerator(numbers):
-            print("Got it! My number was also",number)
+            print("Got it! My number was also", number)
             score["Computer"] += 1
+
         else:
-            print("Darn. I picked", (number%2)+1)
+            print("Darn. I picked", (number % 2)+1)
             score["Player"] += 1
-        print("Computer: ",score["Computer"],"Player: ",score["Player"],"\n")
+
+        # prints scores every time they change
+        print("Computer: ", score["Computer"], "Player: ", score["Player"], "\n")
+
+        # add recent number to history list, if there's more than 3, pop the oldest one.
         numbers.append(number)
         if len(numbers) > 3:
             numbers.pop(0)
     """
-    Only used to tally results of the automated playtesting.
+    # Only used to tally results of the automated playtesting.
     if score["Computer"] > score["Player"]:
         return "Computer"
     else:
