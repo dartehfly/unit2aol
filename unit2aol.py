@@ -53,15 +53,27 @@ grade = input("GRADE: ")
 house = input("HOUSE: ")
 advisor = input("ADVISOR: ")
 
-searchterms = [fname, lname, grade, house, advisor]  # consolidating search terms into a list.
+searchterms = (fname, lname, grade, house, advisor)  # consolidating search terms into a tuple.
+# chose a tuple as it won't be changing within this iteration of the program.
+
+numterms = 0
+for i in range(len(searchterms)):  # scans search terms list for number of terms.
+    if not searchterms[i]:  # if list index is empty, basically do nothing.
+        numterms += 0
+    else:  # if list index contains a term, increase term number.
+        numterms += 1
 
 results = []
 
 # using nested for loops to search through each part of data, appending matching values to a list.
 for i in range(len(data)):
+    matchedterms = 0  # resets num of matched terms for this student
     for j in range(len(data[i])):
-        if searchterms[j].lower() == data[i][j].lower():  # if the info matches, append the index to the results list.
-            results.append(i)
+        if searchterms[j].lower() == data[i][j].lower():  # if the info matches, add 1 to matched terms.
+            matchedterms += 1
+
+    if matchedterms == numterms:  # if the correct number of terms have been matched, add student index to results.
+        results.append(i)
 
 # formatting results indexes into a list of the full student info.
 if len(results) == 0:  # if there are no matching results, informs the user.
