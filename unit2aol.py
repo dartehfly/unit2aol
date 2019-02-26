@@ -132,7 +132,13 @@ def mindreader():
     numbers = []  # used list here because tuples are immutable and dictionaries wouldn't make sense.
 
     while score["Computer"] < 30 and score["Player"] < 30:  # while nobody has won yet,
-        number = int(input("Okay. I have my number. What's yours? (1 or 2)\n"))  # get user number
+
+        number = input("Okay. I have my number. What's yours? (1 or 2)\n")  # get user number
+
+        # defensive coding
+        while number != "1" and number != "2":
+            number = (input("Invalid number. What's yours? (1 or 2)\n"))
+        number = int(number)
 
         # compare user number and computer guess
         if number == numbergenerator(numbers):
