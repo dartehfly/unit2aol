@@ -1,4 +1,3 @@
-from random import *
 """
 =========================
 Question 2: extremeTuple
